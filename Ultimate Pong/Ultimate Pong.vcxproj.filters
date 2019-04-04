@@ -24,6 +24,9 @@
     <ClInclude Include="shader.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Ball.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Paddle.cpp">
@@ -35,28 +38,22 @@
     <ClCompile Include="shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Ball.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="circleframe.fs">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="circleframe2.fs">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="circlevertex.vs">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="hand2frame.fs">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="hand2vertex.vs">
-      <Filter>Shaders</Filter>
-    </None>
     <None Include="paddleframe.fs">
       <Filter>Shaders</Filter>
     </None>
     <None Include="paddlevertex.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="ballframe.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="ballvertex.vs">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>
