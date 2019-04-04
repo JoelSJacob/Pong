@@ -5,8 +5,7 @@
 class Ball {
 
 private:
-	GLfloat bufferData[360];
-	bool arrowKeys;
+	GLfloat bufferData[720]; // 360 points, 1 point = [ x, y, ...otherPoints ]
 
 public:
 	Ball();
