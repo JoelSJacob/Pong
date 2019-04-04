@@ -10,13 +10,13 @@
 #include <GLFW/glfw3.h>
 
 #include "Paddle.h"
+#include "Ball.h"
 #include "shader.hpp"
 #include <glm\glm.hpp>
 #include <glm\gtc\matrix_transform.hpp>
 #include <glm\gtc\type_ptr.hpp>
 #include <chrono>
 
-const double PI = 3.141592653589793238463;
 GLFWwindow* window;
 
 int main(void)
@@ -36,7 +36,7 @@ int main(void)
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	// Open a window and create its OpenGL context
-	window = glfwCreateWindow(1024, 768, "Ultimate Pong", NULL, NULL);
+	window = glfwCreateWindow(800, 800, "Ultimate Pong", NULL, NULL);
 	if (window == NULL) {
 		fprintf(stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n");
 		getchar();
@@ -60,17 +60,21 @@ int main(void)
 	// Black background
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
-	GLuint paddle1ID;
+	GLuint paddle1ID, ballID;
 	glGenVertexArrays(1, &paddle1ID);
+	glGenVertexArrays(1, &ballID);
 
 	GLuint paddle1Program = LoadShaders("paddlevertex.vs", "paddleframe.fs");
+	GLuint ballProgram = LoadShaders("ballvertex.vs", "ballframe.fs");
 
-	// 2) Create paddle #1 buffer
-	GLuint paddleBuffer;
+	// 2) Create buffers
+	GLuint paddleBuffer, ballBuffer;
 	glGenBuffers(1, &paddleBuffer);
+	glGenBuffers(1, &ballBuffer);
 	
 	Paddle player1 = new Paddle(true);
 	Paddle player2 = new Paddle(false);
+	Ball ball = Ball();
 
 	/* Debug for cjh
 	GLfloat vertices[] = {
@@ -90,22 +94,41 @@ int main(void)
 
 		//////////////////////////////////////////////
 		// Paddle Data:
-		GLint posAttrib = glGetAttribLocation(paddle1Program, "position");
-		GLfloat* vertices = player1.getBufferData();
+		// GLint paddle1PosAttrib = glGetAttribLocation(paddle1Program, "position");
+		// GLfloat* paddle1Vertices = player1.getBufferData();
 
-		// Player 1 Paddle
-		glBindVertexArray(paddle1ID);
-		glBindBuffer(GL_ARRAY_BUFFER, paddleBuffer);
-		std::cout << sizeof(vertices[0]) << std::endl;
-		glBufferData(GL_ARRAY_BUFFER, /* Change this back to sizeof(GLfloat*) */32, vertices, GL_STATIC_DRAW);
-		glEnableVertexAttribArray(posAttrib);
-		glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
-		glUseProgram(paddle1Program);
-		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-		glDisableVertexAttribArray(posAttrib);
+		// // Player 1 Paddle
+		// glBindVertexArray(paddle1ID);
+		// glBindBuffer(GL_ARRAY_BUFFER, paddleBuffer);
+		// // std::cout << sizeof(paddle1Vertices[0]) << std::endl;
+		// glBufferData(GL_ARRAY_BUFFER, /* Change this back to sizeof(GLfloat*) */32, paddle1Vertices, GL_STATIC_DRAW);
+		// glEnableVertexAttribArray(paddle1PosAttrib);
+		// glVertexAttribPointer(paddle1PosAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
+		// glUseProgram(paddle1Program);
+		// glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+		// glDisableVertexAttribArray(paddle1PosAttrib);
 
 		/////////////////////////////////////////////////////////////
 		// End Paddle Data
+
+		//////////////////////////////////////////////
+		// Ball Data:
+		GLint ballPosAttrib = glGetAttribLocation(ballProgram, "position");
+		GLfloat* ballVertices = ball.getBufferData();
+
+		// Ball
+		glBindVertexArray(ballID);
+		glBindBuffer(GL_ARRAY_BUFFER, ballBuffer);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 720, ballVertices, GL_STATIC_DRAW);
+		glEnableVertexAttribArray(ballPosAttrib);
+		glVertexAttribPointer(ballPosAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
+		glUseProgram(ballProgram);
+		glDrawArrays(GL_TRIANGLE_FAN, 0, 360);
+		glDisableVertexAttribArray(0);
+
+		/////////////////////////////////////////////////////////////
+		// End Ball Data
+
 
 		// Swap buffers
 		glfwSwapBuffers(window);

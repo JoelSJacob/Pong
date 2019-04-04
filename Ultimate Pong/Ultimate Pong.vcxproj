@@ -115,22 +115,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Ball.h" />
     <ClInclude Include="Paddle.h" />
     <ClInclude Include="shader.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Ball.cpp" />
     <ClCompile Include="GameWindow.cpp" />
     <ClCompile Include="Paddle.cpp" />
     <ClCompile Include="shader.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="circleframe.fs" />
-    <None Include="circleframe2.fs" />
-    <None Include="circlevertex.vs" />
+    <None Include="ballframe.fs" />
+    <None Include="ballvertex.vs" />
     <None Include="paddleframe.fs" />
     <None Include="paddlevertex.vs" />
-    <None Include="hand2frame.fs" />
-    <None Include="hand2vertex.vs" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
