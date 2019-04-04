@@ -4,7 +4,7 @@
 
 Ball::Ball() {
 	// Generate ball vertexes
-	GLfloat RADIUS = 0.9f;
+	GLfloat RADIUS = 0.02f;
 	const float PI = 3.141592653589793238463;
 	for (int i = 0; i < 360; i++) {
 		float angle = 2.0 * PI * float(i) / 360.0;
